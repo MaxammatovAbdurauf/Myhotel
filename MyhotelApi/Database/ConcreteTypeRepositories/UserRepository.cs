@@ -1,0 +1,23 @@
+﻿using Microsoft.EntityFrameworkCore;
+using MyhotelApi.Database.Repositories;
+using MyhotelApi.Helpers.AddServiceFromAttribute;
+using MyhotelApi.Objects.Entities;
+
+namespace MyhotelApi.Database.ConcreteTypeRepositories;
+
+[Scoped]
+public class UserRepository : GenericRepository<AppUser>, IUserRepository
+{
+    private readonly AppDbContext context;
+    public UserRepository(AppDbContext context) : base(context)
+    {
+        this.context = context;
+    }
+
+    public async ValueTask<AppUser?> CheckEmailExistAsync(string email)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        if (user != null) return user;
+        else return null;
+    }
+}

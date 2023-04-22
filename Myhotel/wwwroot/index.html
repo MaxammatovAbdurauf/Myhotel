@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Myhotel</title>
+    <base href="/" />
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="Myhotel.styles.css" rel="stylesheet" />
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v5.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+
+    <script>
+        function init() {
+            var canvas = document.getElementById("canvas");
+            var renderer = new THREE.WebGLRenderer({ canvas: canvas });
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
+            var texture = new THREE.TextureLoader().load("E:\_GitHub\Myhotel\Myhotel\gradus.jpg");
+            texture.minFilter = THREE.LinearFilter;
+            var geometry = new THREE.SphereGeometry(500, 60, 40);
+            var material = new THREE.MeshBasicMaterial({ map: texture });
+            material.side = THREE.BackSide;
+            var mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+            camera.position.set(0, 0, 0.1);
+            camera.lookAt(mesh.position);
+            renderer.render(scene, camera);
+            window.init.onLoaded();
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <div id="app">Loading...</div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.webassembly.js"></script>
+</body>
+
+</html>
