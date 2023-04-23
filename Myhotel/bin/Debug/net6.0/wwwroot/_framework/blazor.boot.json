@@ -200,13 +200,13 @@
       "mscorlib.dll": "sha256-TYLzIm125RbnX9+RAPqJnwZhd6CnQpJcrjiMpJfZ720=",
       "netstandard.dll": "sha256-HhuK9zDkd1N7hODAEiNJ11VF8T54IgrM6hZfLHmHdqM=",
       "System.Private.CoreLib.dll": "sha256-dXaTqyg1PnXPiSwywpic1PVrd7P8Vb5tN0i0\/urdt3E=",
-      "Myhotel.dll": "sha256-NbO6MJBOOwCwBj7zMfdr7O0H7mBQXMuaULDAlGdEY+E="
+      "Myhotel.dll": "sha256-PrgN3w35NxmOdI3hqvEpkOWVefQG4IqIRE1agmlGj8Y="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "Myhotel.pdb": "sha256-hFYO4jZzb69mhprap07EE\/HJX1YaQN4gQDYBQ\/jthjg="
+      "Myhotel.pdb": "sha256-EELhpb6VSoP8TPPxd\/Cvk30UEARnvdaQWeFZoUDjnyg="
     },
     "runtime": {
       "dotnet.6.0.8.bl5jbplwp5.js": "sha256-WT60vnXnQtCNURE40qo+XSL1o4iYFvABy0NVaFhm7MI=",

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "tnvl4KTrkXMV8sohuW1jrpQDf3SJNAk9LgOCBNbF+M4=",
+  "Hash": "Es6gYFobNiSmtBclRmEaK2LbNQhchBWd/I33TpC/cW0=",
   "Source": "Myhotel",
   "BasePath": "/",
   "Mode": "Root",
@@ -7223,23 +7223,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
-    },
-    {
-      "Identity": "E:\\_GitHub\\Myhotel\\Myhotel\\wwwroot\\js\\Interop.js",
-      "SourceId": "Myhotel",
-      "SourceType": "Discovered",
-      "ContentRoot": "E:\\_GitHub\\Myhotel\\Myhotel\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "js/Interop.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\Interop.js"
     },
     {
       "Identity": "E:\\_GitHub\\Myhotel\\Myhotel\\wwwroot\\sample-data\\weather.json",

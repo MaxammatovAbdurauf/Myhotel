@@ -1,7 +1,9 @@
 ﻿using MyhotelApi.Database.IRepositories;
+using MyhotelApi.Helpers.AddServiceFromAttribute;
 
 namespace MyhotelApi.Database.ConcreteTypeRepositories;
 
+[Scoped]
 public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext context;

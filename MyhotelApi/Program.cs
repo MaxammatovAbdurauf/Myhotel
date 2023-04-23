@@ -1,3 +1,4 @@
+using MyhotelApi.Database;
 using MyhotelApi.Extensions;
 using MyhotelApi.Middlewares;
 
@@ -9,10 +10,15 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
 app.UseHttpsRedirection();
+
+app.UseExceptionHandlerMiddleware();
+app.UseRequestCultureMiddleware();
+
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseExceptionHandlerMiddleware();
+
 app.MapControllers();
 
 app.Run();

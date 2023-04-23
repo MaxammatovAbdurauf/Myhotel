@@ -16,6 +16,6 @@ public class UpdateHouseDto
     public string? ZipCode { get; set; } // ZIP code of the house's location
     public uint? Stars { get; set; }  // How many starts house have (out of 5), always for hotels
     public decimal? PricePerNight { get; set; } // Price per night for a room
-    public ICollection<string>? GalleryPaths { get; set; } // List of images belong to the house
+    public List<string>? GalleryPaths { get; set; } // List of images belong to the house
     public string? HouseAvatarPath { get; set; } // the path of image which is chosen as avatar for the house 
 }

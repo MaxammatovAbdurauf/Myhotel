@@ -1,4 +1,6 @@
-﻿namespace MyhotelApi.Objects.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MyhotelApi.Objects.Entities;
 
 public class Review
 {
@@ -7,4 +9,10 @@ public class Review
     public Guid HouseId { get; set; } // Id of house which the review is written for
     public string? Comment { get; set; } // Text of the review
     public decimal Rating { get; set; } // Rating given by the user (out of 5)
+
+    [ForeignKey(nameof(HouseId))]
+    public virtual House? House { get; set; }
+
+    [ForeignKey(nameof(UserId))]
+    public virtual AppUser? User { get; set; }
 }

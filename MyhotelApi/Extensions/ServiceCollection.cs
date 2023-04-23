@@ -21,7 +21,7 @@ public static class ServiceCollection
         builder.Services._AddSwaggerGen();
         builder.Services._AddCors();
         builder.Services._AddAutoDtoValidations();
-        builder.Services._AddDbContext();
+        builder.Services._AddDbContext(builder.Configuration);
         builder.Services._AddJwtBearer(builder.Configuration);
         builder.Services._AddConfigurations(builder.Configuration);
         builder.Services._AddServicesViaAttribute();
@@ -93,12 +93,12 @@ public static class ServiceCollection
         });
     }
 
-    public static void _AddDbContext(this IServiceCollection services)
+    public static void _AddDbContext(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<AppDbContext>(options =>
         {
-            options.UseNpgsql("Server=localhost;Port=5432;Database=shablondb;User Id=postgres;Password=postgres;");
-            options.UseLazyLoadingProxies(true);
+            options.UseNpgsql(configuration.GetConnectionString("Database"));
+           // options.UseLazyLoadingProxies(true);
         });
     }
 

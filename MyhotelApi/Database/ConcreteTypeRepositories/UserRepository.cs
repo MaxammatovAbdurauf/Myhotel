@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyhotelApi.Database.Repositories;
-using MyhotelApi.Helpers.AddServiceFromAttribute;
 using MyhotelApi.Objects.Entities;
 
 namespace MyhotelApi.Database.ConcreteTypeRepositories;
 
-[Scoped]
 public class UserRepository : GenericRepository<AppUser>, IUserRepository
 {
     private readonly AppDbContext context;

@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyhotelApi.Database.ConcreteTypeRepositories;
 
 namespace MyhotelApi.Database.Repositories;
-
 
 public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
 {
@@ -46,7 +44,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         return updatedEntity;
     }
 
-    public async ValueTask UpdateRangeAsync (IEnumerable<TEntity> entities)
+    public async ValueTask UpdateRangeAsync(IEnumerable<TEntity> entities)
     {
         DbSet.UpdateRange(entities);
         await context.SaveChangesAsync();

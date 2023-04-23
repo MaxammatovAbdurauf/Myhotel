@@ -5,5 +5,5 @@ namespace MyhotelApi.Database.ConcreteTypeRepositories;
 
 public class RoomRepository : GenericRepository<Room>, IRoomRepository
 {
-    public RoomRepository(AppDbContext context) : base(context)  {   }
+    public RoomRepository(AppDbContext context) : base(context) { }
 }

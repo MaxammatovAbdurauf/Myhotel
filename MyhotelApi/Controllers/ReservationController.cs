@@ -36,7 +36,7 @@ public class ReservationController : ControllerBase
         return Ok(reservations);
     }
 
-    [HttpPost]
+    [HttpPut]
     public async ValueTask<IActionResult> UpdateReservationAsync(UpdateReservationDto updateReservationDto)
     {
         var updatedReservation = await reservationService.UpdateReservationAsync(updateReservationDto);

@@ -5,5 +5,5 @@ namespace MyhotelApi.Database.ConcreteTypeRepositories;
 
 public class ReservationRepository : GenericRepository<Reservation>, IReservationRepository
 {
-    public ReservationRepository (AppDbContext context) : base (context) {  }
+    public ReservationRepository(AppDbContext context) : base(context) { }
 }

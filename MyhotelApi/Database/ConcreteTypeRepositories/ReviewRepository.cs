@@ -5,5 +5,5 @@ namespace MyhotelApi.Database.ConcreteTypeRepositories;
 
 public class ReviewRepository : GenericRepository<Review>, IReviewRepository
 {
-    public ReviewRepository (AppDbContext context) : base (context) {   }
+    public ReviewRepository(AppDbContext context) : base(context) { }
 }
