@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyhotelApi.Helpers.Exceptions;
 using MyhotelApi.Objects.Models;
+using MyhotelApi.Objects.Options;
 using MyhotelApi.Services;
 using MyhotelApi.Services.IServices;
 
@@ -17,6 +19,7 @@ public class RoomController : ControllerBase
     }
 
     [HttpPost]
+    [Role(RoleType.Manager, RoleType.Owner)]
     public async ValueTask<IActionResult> AddRoomAsync(CreateRoomDto createRoomDto)
     {
         var roomId = await roomService.AddRoomAsync(createRoomDto);
@@ -31,6 +34,7 @@ public class RoomController : ControllerBase
     }
 
     [HttpGet("all")]
+    [Role(RoleType.Creator, RoleType.Admin)]
     public async ValueTask<IActionResult> GetRoomsAsync(RoomFilterDto? RoomFilterDto = null)
     {
         var rooms = await roomService.GetRoomsAsync(RoomFilterDto);
@@ -38,6 +42,7 @@ public class RoomController : ControllerBase
     }
 
     [HttpPut]
+    [Role(RoleType.Manager, RoleType.Owner, RoleType.Creator)]
     public async ValueTask<IActionResult> UpdateRoomAsync(UpdateRoomDto updateRoomDto)
     {
         var updatedRoom = await roomService.UpdateRoomAsync(updateRoomDto);
@@ -45,6 +50,7 @@ public class RoomController : ControllerBase
     }
 
     [HttpDelete]
+    [Role(RoleType.Manager, RoleType.Owner,RoleType.Creator)]
     public async ValueTask<IActionResult> DeleteRoomAsync(Guid roomId)
     {
         var deletedRoom = await roomService.DeleteRoomAsync(roomId);

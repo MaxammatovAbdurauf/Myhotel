@@ -27,7 +27,7 @@ public class HouseService : IHouseService
         house.Id    = houseId;
         house.Rating = 0;
         house.CreatedDate = DateTime.Now;
-        house.Status = HouseStatus.active;
+        house.Status = EHouseStatus.active;
 
         //bunday namedagi house bor yoki yo`qligini validationda tekshir
         await unitOfWork.houseRepository.AddAsync(house);
@@ -68,8 +68,8 @@ public class HouseService : IHouseService
         if (updateHouseDto.HouseAvatarPath != null) house.HouseAvatarPath = updateHouseDto.HouseAvatarPath;
 
         if (updateHouseDto.Status != null && 
-            updateHouseDto.Status != HouseStatus.created &&
-            updateHouseDto.Status != HouseStatus.deleted) house.Status = updateHouseDto.Status;
+            updateHouseDto.Status != EHouseStatus.created &&
+            updateHouseDto.Status != EHouseStatus.deleted) house.Status = updateHouseDto.Status;
 
         var updatedHouse  = await unitOfWork.houseRepository.UpdateAsync(house);
 
@@ -87,7 +87,7 @@ public class HouseService : IHouseService
         }
         else
         {
-            house.Status = HouseStatus.deleted;
+            house.Status = EHouseStatus.deleted;
             var updatedHouse = await unitOfWork.houseRepository.UpdateAsync(house);
             return updatedHouse.Adapt<HouseView>();
         }     

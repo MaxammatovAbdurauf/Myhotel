@@ -4,9 +4,9 @@ namespace MyhotelApi.Helpers.Exceptions;
 
 public class RoleAttribute : TypeFilterAttribute
 {
-    public RoleAttribute(string roles) : base(typeof(JwtAuthoriseAttribute))
+    public RoleAttribute(params string[] roles) : base(typeof(JwtAuthoriseAttribute))
     {
-        var roleList = roles.Split(',').ToList();
+        var roleList = roles.ToList();
         Arguments = new object[] { new List<string>(roleList) };
     }
 }

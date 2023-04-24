@@ -1,4 +1,6 @@
-﻿namespace MyhotelApi.Middlewares;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace MyhotelApi.Middlewares;
 
 public class ExceptionHandlerMiddleware
 {
@@ -13,6 +15,10 @@ public class ExceptionHandlerMiddleware
         try
         {
             await next(context);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         }
         catch (Exception ex)
         {

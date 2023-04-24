@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using MyhotelApi.Objects.Models;
+using MyhotelApi.Objects.Options;
 using MyhotelApi.Services;
 using MyhotelApi.Services.IServices;
 using Newtonsoft.Json;
@@ -12,7 +13,7 @@ namespace MyhotelApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AccountController :  ControllerBase
+public class AccountController : ControllerBase
 {
     private readonly IAccountService userService;
     private readonly IEmailService emailService;
@@ -32,7 +33,6 @@ public class AccountController :  ControllerBase
     }
 
     [HttpPost("signin")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> SignIn([FromBody] SignInUserDto signInUserDto)
     {
         var confirmationNumber = await CheckAndSendEmail(signInUserDto);
@@ -68,7 +68,7 @@ public class AccountController :  ControllerBase
     }
 
     [HttpGet("all")]
-    [Role("admin,owner")]
+    [Role(RoleType.Creator, RoleType.Admin)]
     public async Task<IActionResult> GetUsers()
     {
         var users = await userService.GetUsersAsync();
@@ -76,7 +76,7 @@ public class AccountController :  ControllerBase
     }
 
     [HttpGet]
-    [Role("user")]
+    [Role(RoleType.All)]
     public async Task<IActionResult> GetUserById()
     {
         var userId = CheckTokenData(HttpContext.Request.Headers[HeaderNames.Authorization]).Item1;
@@ -85,7 +85,7 @@ public class AccountController :  ControllerBase
     }
 
     [HttpPut]
-    [Role("user")]
+    [Role(RoleType.All)]
     public async Task<IActionResult> UpdateUser(UpdateUserDto updateUserDto)
     {
         var userId = CheckTokenData(HttpContext.Request.Headers[HeaderNames.Authorization]).Item1;
@@ -94,7 +94,7 @@ public class AccountController :  ControllerBase
     }
 
     [HttpDelete]
-    [Role("user")]
+    [Role(RoleType.All)]
     public async Task<IActionResult> DeleteUser(Guid? userId = null)
     {
         var userData = CheckTokenData(HttpContext.Request.Headers[HeaderNames.Authorization]);
@@ -120,7 +120,7 @@ public class AccountController :  ControllerBase
 
         var confirmationNumber = new Random().Next(100000, 1000000).ToString();
         var emailReceiver = new string[] { signInUserDto.Email! };
-        emailService.SendEmail(emailReceiver, confirmationNumber);
+       // emailService.SendEmail(emailReceiver, confirmationNumber);
         return confirmationNumber;
     }
 }

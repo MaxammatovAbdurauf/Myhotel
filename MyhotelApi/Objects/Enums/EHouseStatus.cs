@@ -1,6 +1,6 @@
 ﻿namespace MyhotelApi.Objects.Enums;
 
-public enum HouseStatus
+public enum EHouseStatus
 {
     created,
     inactive,

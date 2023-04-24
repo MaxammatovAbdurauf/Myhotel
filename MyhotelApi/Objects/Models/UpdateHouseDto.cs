@@ -7,8 +7,8 @@ public class UpdateHouseDto
 {
     public Guid Id { get; set; } // Unique identifier for the house
     public string? Name { get; set; } // Name of the house
-    public HouseType? Type { get; set; } // Type of the house (like hotel, motel and others)
-    public HouseStatus? Status { get; set; } // Status of the house (like active, deleted and others)
+    public EHouseType? Type { get; set; } // Type of the house (like hotel, motel and others)
+    public EHouseStatus? Status { get; set; } // Status of the house (like active, deleted and others)
     public string? Address { get; set; } // Address of the house
     public string? City { get; set; } // City where the house is located
     public string? Region { get; set; } // Region where the house is located (like a state)

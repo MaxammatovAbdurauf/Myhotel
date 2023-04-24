@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Net.Http.Headers;
+using MyhotelApi.Objects.Options;
 using MyhotelApi.Services;
 using System.Security.Claims;
 
@@ -30,29 +31,42 @@ public class JwtAuthoriseAttribute : ActionFilterAttribute
         var claimPrincipal = jwtService.GetPrincipal(authorisationToken!);
         var userRole = claimPrincipal!.FindFirst(claim => claim.Type == ClaimTypes.Role)!.Value;
 
-        if (roles.Contains("user"))
+        if (roles.Contains(RoleType.All))  
         {
+            if (userRole == RoleType.User  || userRole == RoleType.Manager ||
+                userRole == RoleType.Owner || userRole == RoleType.Admin   ||
+                userRole == RoleType.Creator) {  }
+             else throw new UnauthorizedAccessException();
         }
-        else if (roles.Contains("admin"))
+
+        else if (roles.Contains(RoleType.User))
         {
-            if (userRole != "admin" || userRole != "owner")
-            {
-                context.Result = new UnauthorizedResult();
-                return;
-            }
+            if (userRole != RoleType.User) throw new UnauthorizedAccessException();
         }
-        else if (roles.Contains("owner"))
+
+        else if (roles.Contains(RoleType.Manager))
         {
-            if (userRole != "owner")
-            {
-                context.Result = new UnauthorizedResult();
-                return;
-            }
+            if (userRole != RoleType.Manager) throw new UnauthorizedAccessException();
         }
+
+        else if (roles.Contains(RoleType.Owner))
+        {
+            if (userRole != RoleType.Owner) throw new UnauthorizedAccessException();
+        }
+
+        else if (roles.Contains(RoleType.Admin))
+        {
+            if (userRole != RoleType.Admin) throw new UnauthorizedAccessException();
+        }
+
+        else if (roles.Contains(RoleType.Creator))
+        {
+            if (userRole != RoleType.Creator) throw new UnauthorizedAccessException();
+        }
+
         else
         {
-            context.Result = new UnauthorizedResult();
-            return;
+            throw new UnauthorizedAccessException();
         }
 
         base.OnActionExecuting(context);

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyhotelApi.Helpers.Exceptions;
 using MyhotelApi.Objects.Models;
+using MyhotelApi.Objects.Options;
 using MyhotelApi.Objects.Views;
 using MyhotelApi.Services;
 using MyhotelApi.Services.IServices;
@@ -8,6 +10,7 @@ namespace MyhotelApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Role(RoleType.All)]
 public class ReviewController : ControllerBase
 {
     private readonly IReviewService reviewService;

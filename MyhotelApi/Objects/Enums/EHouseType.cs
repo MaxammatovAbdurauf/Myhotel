@@ -1,6 +1,6 @@
 ﻿namespace MyhotelApi.Objects.Enums;
 
-public enum HouseType
+public enum EHouseType
 {
     hotel,
     hostel
