@@ -1,4 +1,5 @@
 ﻿using MyhotelApi.Database.ConcreteTypeRepositories;
+using System.Linq.Expressions;
 
 namespace MyhotelApi.Database;
 
@@ -13,8 +14,9 @@ public interface IGenericRepository<TEntity> where TEntity : class
     //Get:R
     ValueTask<TEntity?> GetAsync(int Id);
     ValueTask<TEntity?> GetAsync(Guid id);
-    ValueTask<IEnumerable<TEntity>> GetAllAsync(); //IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression);
-
+    ValueTask<IEnumerable<TEntity>> GetAllAsync();
+    IQueryable<TEntity> GetAll();
+    IEnumerable<TEntity> FindAsync(Expression<Func<TEntity, bool>> expression);
 
     //Update:U
     ValueTask<TEntity?> UpdateAsync(TEntity entity);

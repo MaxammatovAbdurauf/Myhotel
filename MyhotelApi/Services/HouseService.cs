@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using Myhotel.Services;
 using MyhotelApi.Database.IRepositories;
 using MyhotelApi.Helpers.AddServiceFromAttribute;
 using MyhotelApi.Objects.Entities;
@@ -43,7 +44,15 @@ public class HouseService : IHouseService
 
     public async ValueTask<ICollection<HouseView>> GetHousesAsync(HouseFilterDto? houseFilterDto = null)
     {
-        var houses = await unitOfWork.houseRepository.GetAllAsync();
+        var query = unitOfWork.houseRepository.GetAll();
+
+        if (houseFilterDto != null)
+        {
+
+        }
+
+        var houses = await query.ToPagedListAsync(houseFilterDto);
+
         return houses.Select(h => h.Adapt<HouseView>()).ToList();
     }
 

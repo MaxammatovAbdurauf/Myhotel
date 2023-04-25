@@ -1,12 +1,12 @@
-﻿namespace Myhotel.Objects.Options;
+﻿namespace MyhotelApi.Objects.Options;
 
 public class PaginationParams
 {
     private const int MaxPageSize = 100;
     private const int MinPageNumber = 1;
 
-    private int PageSize = 24;
-    private int PageNumber = 1;
+    private int PageSize = 50;
+    private int CurrentPage = 1;
 
     public int Size
     {
@@ -33,12 +33,12 @@ public class PaginationParams
     {
         get
         {
-            if (PageNumber < MinPageNumber) PageNumber = MinPageNumber;
-            return PageNumber;
+            if (CurrentPage < MinPageNumber) CurrentPage = MinPageNumber;
+            return CurrentPage;
         }
         set
         {
-            PageNumber = value;
+            CurrentPage = value;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace MyhotelApi.Database.Repositories;
 
@@ -33,6 +34,11 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     public async ValueTask<TEntity?> GetAsync(Guid Id) => await DbSet.FindAsync(Id);
 
     public async ValueTask<IEnumerable<TEntity>> GetAllAsync() => await DbSet.ToListAsync();
+    
+    public IQueryable<TEntity> GetAll() => DbSet;
+    
+    public IEnumerable<TEntity> FindAsync(Expression<Func<TEntity, bool>> expression) 
+        => DbSet.Where(expression);
 
 
     //Update:U
