@@ -31,7 +31,7 @@ public class JwtAuthoriseAttribute : ActionFilterAttribute
         var claimPrincipal = jwtService.GetPrincipal(authorisationToken!);
         var userRole = claimPrincipal!.FindFirst(claim => claim.Type == ClaimTypes.Role)!.Value;
 
-        if (roles.Contains(RoleType.All))  
+        /*if (roles.Contains(RoleType.All))  
         {
             if (userRole == RoleType.User  || userRole == RoleType.Manager ||
                 userRole == RoleType.Owner || userRole == RoleType.Admin   ||
@@ -67,7 +67,7 @@ public class JwtAuthoriseAttribute : ActionFilterAttribute
         else
         {
             throw new UnauthorizedAccessException();
-        }
+        }*/
 
         base.OnActionExecuting(context);
     }

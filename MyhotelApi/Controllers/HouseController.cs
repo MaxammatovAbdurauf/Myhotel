@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyhotelApi.Helpers.Exceptions;
 using MyhotelApi.Objects.Models;
-using MyhotelApi.Objects.Options;
 using MyhotelApi.Services;
 using MyhotelApi.Services.IServices;
 using System.Security.Claims;
@@ -22,9 +21,12 @@ public class HouseController : ControllerBase
     }
 
     [HttpPost]
-    [Role(RoleType.All)]
+    //[Role(RoleType.All)]
     public async Task<IActionResult> AddHouseAsync(CreateHouseDto createHouseDto)
     {
+        var userId = (await CheckTokenData(HttpContext.Request.Headers.Authorization)).Item1;
+        createHouseDto.UserId = userId;
+
         var houseId = await houseService.AddHouseAsync(createHouseDto);
         return Ok(houseId);
     }
@@ -37,7 +39,7 @@ public class HouseController : ControllerBase
     }
 
     [HttpGet("all")]
-    [Role(RoleType.Creator, RoleType.Admin)]
+    //[Role(RoleType.Creator, RoleType.Admin)]
     public async Task<IActionResult> GetHousesAsync(HouseFilterDto? houseFilterDto = null)
     {
         var houses = await houseService.GetHousesAsync(houseFilterDto);
@@ -45,7 +47,7 @@ public class HouseController : ControllerBase
     }
 
     [HttpPut]
-    [Role(RoleType.Manager,RoleType.Owner, RoleType.Creator)]
+    //[Role(RoleType.Manager,RoleType.Owner, RoleType.Creator)]
     public async Task<IActionResult> UpdateHouseAsync(UpdateHouseDto updateHouseDto)
     {
         var updatedHouse = await houseService.UpdateHouseAsync(updateHouseDto);
@@ -53,7 +55,7 @@ public class HouseController : ControllerBase
     }
 
     [HttpDelete]
-    [Role(RoleType.Owner, RoleType.Creator)]
+    //[Role(RoleType.Owner, RoleType.Creator)]
     public async Task<IActionResult> DeleteHouseAsync(Guid houseId)
     {
         var role = (await CheckTokenData(HttpContext.Request.Headers.Authorization, houseId)).Item2;

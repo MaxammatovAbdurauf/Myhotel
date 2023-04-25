@@ -4,8 +4,10 @@ using MyhotelApi.Database.IRepositories;
 using MyhotelApi.Helpers.AddServiceFromAttribute;
 using MyhotelApi.Objects.Entities;
 using MyhotelApi.Objects.Models;
+using MyhotelApi.Objects.Options;
 using MyhotelApi.Objects.Views;
 using MyhotelApi.Services.IServices;
+using StackExchange.Redis;
 
 namespace MyhotelApi.Services;
 
@@ -24,7 +26,7 @@ public class AccountService : IAccountService
         var user = signInUserDto.Adapt<AppUser>();
         var userId = Guid.NewGuid();
         user.Id = userId;
-        user.Role = "user";
+        user.Role = RoleType.Creator;
 
         await unitOfWork.userRepository.AddAsync(user);
         return userId;
@@ -39,7 +41,7 @@ public class AccountService : IAccountService
     public async ValueTask<List<UserView>> GetUsersAsync()
     {
         var templates = await unitOfWork.userRepository.GetAllAsync();
-        return templates.Adapt<List<UserView>>();
+        return templates.Select(u => u.Adapt<UserView>()).ToList();
     }
 
     public async ValueTask<UserView> UpdateUserAsync(Guid userId, UpdateUserDto updateUserDto)

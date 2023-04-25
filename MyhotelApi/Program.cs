@@ -1,4 +1,3 @@
-using MyhotelApi.Database;
 using MyhotelApi.Extensions;
 using MyhotelApi.Middlewares;
 

@@ -27,13 +27,12 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         await context.SaveChangesAsync();
     }
 
-
     //Get:R
     public async ValueTask<TEntity?> GetAsync(int Id) => await DbSet.FindAsync(Id);
 
     public async ValueTask<TEntity?> GetAsync(Guid Id) => await DbSet.FindAsync(Id);
 
-    public async ValueTask<IEnumerable<TEntity>> GetAllAsync() => await DbSet.ToListAsync();
+    public async ValueTask<List<TEntity>> GetAllAsync() => await DbSet.ToListAsync();
     
     public IQueryable<TEntity> GetAll() => DbSet;
     

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace MyhotelApi.Middlewares;
+﻿namespace MyhotelApi.Middlewares;
 
 public class ExceptionHandlerMiddleware
 {

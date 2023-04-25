@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyhotelApi.Helpers.AddServiceFromAttribute;
 using MyhotelApi.Objects.Options;
 using Newtonsoft.Json;
 
 namespace Myhotel.Services;
 
+[Scoped]
 public static class PagedListService
 {
     public static async Task<IEnumerable<T>> ToPagedListAsync<T>(this IQueryable<T> source, PaginationParams? pageParams)

@@ -14,7 +14,7 @@ public interface IGenericRepository<TEntity> where TEntity : class
     //Get:R
     ValueTask<TEntity?> GetAsync(int Id);
     ValueTask<TEntity?> GetAsync(Guid id);
-    ValueTask<IEnumerable<TEntity>> GetAllAsync();
+    ValueTask<List<TEntity>> GetAllAsync();
     IQueryable<TEntity> GetAll();
     IEnumerable<TEntity> FindAsync(Expression<Func<TEntity, bool>> expression);
 
