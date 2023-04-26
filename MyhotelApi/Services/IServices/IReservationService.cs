@@ -7,7 +7,7 @@ public interface IReservationService
 {
     ValueTask<Guid> AddReservationAsync(CreateReservationDto createReservationDto);
     ValueTask<ReservationView> GetReservationByIdAsync(Guid reservationId);
-    ValueTask<ICollection<ReservationView>> GetReservationsAsync(ReservationFilterDto? reservationFilterDto = null);
+    ValueTask<List<ReservationView>> GetReservationsAsync(ReservationFilterDto? reservationFilterDto = null);
     ValueTask<ReservationView> UpdateReservationAsync(UpdateReservationDto updateReservationDto);
-    ValueTask<ReservationView> DeleteReservationAsync(Guid reservationId);
+    ValueTask<ReservationView> DeleteReservationAsync(Guid reservationId, bool deleteFromDataBase = false);
 }

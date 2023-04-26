@@ -49,12 +49,12 @@ public class HouseService : IHouseService
 
         if (houseFilterDto != null)
         {
-            if (houseFilterDto.Country != null) query.Where(h => h.Country == houseFilterDto.Country);
-            if (houseFilterDto.Region != null) query.Where(h => h.Region == houseFilterDto.Region);
-            if (houseFilterDto.City != null) query.Where(h => h.City == houseFilterDto.City);
-            if (houseFilterDto.Stars != null) query.Where(h => h.Stars == houseFilterDto.Stars);
-            if (houseFilterDto.PricePerNight != null) query.Where(h => h.PricePerNight == houseFilterDto.PricePerNight);
-            if (houseFilterDto.Rating != null) query.Where(h => h.Rating == houseFilterDto.Rating);
+            if (houseFilterDto.Country != null) query = query.Where(h => h.Country == houseFilterDto.Country);
+            if (houseFilterDto.Region  != null) query = query.Where(h => h.Region == houseFilterDto.Region);
+            if (houseFilterDto.City    != null) query = query.Where(h => h.City == houseFilterDto.City);
+            if (houseFilterDto.Stars   != null) query = query.Where(h => h.Stars == houseFilterDto.Stars);
+            if (houseFilterDto.PricePerNight != null) query = query.Where(h => h.PricePerNight == houseFilterDto.PricePerNight);
+            if (houseFilterDto.Rating != null)        query = query.Where(h => h.Rating == houseFilterDto.Rating);
 
             if (houseFilterDto.Amenities != null)
             {
@@ -69,10 +69,10 @@ public class HouseService : IHouseService
             {
                 query = houseFilterDto.Status switch
                 {
-                    EHouseStatus.created  => query =  query.Where(h => h.Status == EHouseStatus.created),
-                    EHouseStatus.active   => query =  query.Where(h => h.Status == EHouseStatus.active),
-                    EHouseStatus.inactive => query =  query.Where(h => h.Status == EHouseStatus.inactive),
-                    EHouseStatus.deleted  => query =  query.Where(h => h.Status == EHouseStatus.deleted),
+                    EHouseStatus.created  => query = query.Where(h => h.Status == EHouseStatus.created),
+                    EHouseStatus.active   => query = query.Where(h => h.Status == EHouseStatus.active),
+                    EHouseStatus.inactive => query = query.Where(h => h.Status == EHouseStatus.inactive),
+                    EHouseStatus.deleted  => query = query.Where(h => h.Status == EHouseStatus.deleted),
                     _ =>  query
                 };
             }

@@ -23,9 +23,11 @@ public class RoomService : IRoomService
 
     public async ValueTask<Guid> AddRoomAsync(CreateRoomDto createRoomDto)
     {
-        var roomId = Guid.NewGuid();
-        var room   = createRoomDto.Adapt<Room>();
-        room.Id    = roomId;
+        var roomId  = Guid.NewGuid();
+        var room    = createRoomDto.Adapt<Room>();
+
+        room.Id     = roomId;
+        room.Status = ERoomStatus.created;
 
         await unitOfWork.roomRepository.AddAsync(room);
 
@@ -44,7 +46,22 @@ public class RoomService : IRoomService
         
         if (roomFilterDto != null)
         {
+            if (roomFilterDto.HouseId != null)  query = query.Where(r => r.HouseId == roomFilterDto.HouseId);
+            if (roomFilterDto.Capacity != null) query = query.Where(r => r.Capacity== roomFilterDto.Capacity);
+            if (roomFilterDto.PricePerNight != null) query = query.Where(r => r.PricePerNight == roomFilterDto.PricePerNight);
+            if (roomFilterDto.ReservationId != null) query = query.Where(r => r.ReservationId == roomFilterDto.ReservationId);
 
+            if (roomFilterDto.Status != null)
+            {
+                query = roomFilterDto.Status switch
+                {
+                    ERoomStatus.created => query.Where(r => r.Status == ERoomStatus.created),
+                    ERoomStatus.deleted => query.Where(r => r.Status == ERoomStatus.deleted),
+                    ERoomStatus.inactive => query.Where(r => r.Status == ERoomStatus.inactive),
+                    ERoomStatus.active => query.Where(r => r.Status == ERoomStatus.active),
+                    _ => query
+                };
+            }
         }
 
         var rooms = await query.ToPagedListAsync(roomFilterDto);

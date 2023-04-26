@@ -1,6 +1,8 @@
-﻿namespace MyhotelApi.Objects.Models
+﻿using MyhotelApi.Objects.Enums;
+
+namespace MyhotelApi.Objects.Models;
+
+public class UpdateReservationDto
 {
-    public class UpdateReservationDto
-    {
-    }
+    public Guid? Id { get; set; } // Unique identifier for the reservation
 }
