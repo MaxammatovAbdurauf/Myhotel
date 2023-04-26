@@ -4,7 +4,7 @@ using MyhotelApi.Objects.Entities;
 
 namespace MyhotelApi.Database.ConcreteTypeRepositories;
 
-public class UserRepository : GenericRepository<AppUser>, IUserRepository
+public class UserRepository : GenericRepository<User>, IUserRepository
 {
     private readonly AppDbContext context;
     public UserRepository(AppDbContext context) : base(context)
@@ -12,7 +12,7 @@ public class UserRepository : GenericRepository<AppUser>, IUserRepository
         this.context = context;
     }
 
-    public async ValueTask<AppUser?> CheckEmailExistAsync(string email)
+    public async ValueTask<User?> CheckEmailExistAsync(string email)
     {
         var user = await context.Users.FirstOrDefaultAsync(u => u.Email == email);
         if (user != null) return user;

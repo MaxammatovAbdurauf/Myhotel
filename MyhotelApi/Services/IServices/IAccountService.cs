@@ -11,5 +11,5 @@ public interface IAccountService
     ValueTask<UserView> GetUserByIdAsync(Guid userId);
     ValueTask<UserView> UpdateUserAsync(Guid userId, UpdateUserDto updateUserDto);
     ValueTask DeleteUserAsync(Guid userId, bool fullyDelete = false);
-    ValueTask<AppUser?> CheckEmailExistAsync(string email);
+    ValueTask<User?> CheckEmailExistAsync(string email);
 }

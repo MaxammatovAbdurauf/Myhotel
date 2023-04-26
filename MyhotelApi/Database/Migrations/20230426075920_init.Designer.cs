@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MyhotelApi.Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230425105937_init")]
+    [Migration("20230426075920_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,16 +31,16 @@ namespace MyhotelApi.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("HouseId")
+                    b.Property<Guid?>("HouseId")
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("IsFree")
+                    b.Property<bool?>("IsFree")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("RoomId")
+                    b.Property<Guid?>("RoomId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -50,29 +50,6 @@ namespace MyhotelApi.Database.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Amenities");
-                });
-
-            modelBuilder.Entity("MyhotelApi.Objects.Entities.AppUser", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("text");
-
-                    b.Property<long?>("PhoneNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Role")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MyhotelApi.Objects.Entities.House", b =>
@@ -182,13 +159,13 @@ namespace MyhotelApi.Database.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("HouseId")
+                    b.Property<Guid?>("HouseId")
                         .HasColumnType("uuid");
 
                     b.Property<decimal>("Rating")
                         .HasColumnType("numeric");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -209,7 +186,10 @@ namespace MyhotelApi.Database.Migrations
                     b.Property<int>("Capacity")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("HouseId")
+                    b.Property<List<string>>("Gallery")
+                        .HasColumnType("text[]");
+
+                    b.Property<Guid?>("HouseId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -218,7 +198,7 @@ namespace MyhotelApi.Database.Migrations
                     b.Property<decimal>("PricePerNight")
                         .HasColumnType("numeric");
 
-                    b.Property<Guid>("ReservationId")
+                    b.Property<Guid?>("ReservationId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("RoomAvatarPath")
@@ -233,19 +213,38 @@ namespace MyhotelApi.Database.Migrations
                     b.ToTable("Rooms");
                 });
 
+            modelBuilder.Entity("MyhotelApi.Objects.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<long?>("PhoneNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("MyhotelApi.Objects.Entities.Amenity", b =>
                 {
                     b.HasOne("MyhotelApi.Objects.Entities.House", "House")
-                        .WithMany("Amenities")
-                        .HasForeignKey("HouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("HouseId");
 
                     b.HasOne("MyhotelApi.Objects.Entities.Room", "Room")
                         .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoomId");
 
                     b.Navigation("House");
 
@@ -255,12 +254,12 @@ namespace MyhotelApi.Database.Migrations
             modelBuilder.Entity("MyhotelApi.Objects.Entities.Reservation", b =>
                 {
                     b.HasOne("MyhotelApi.Objects.Entities.House", "House")
-                        .WithMany("Reservations")
+                        .WithMany()
                         .HasForeignKey("HouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyhotelApi.Objects.Entities.AppUser", "User")
+                    b.HasOne("MyhotelApi.Objects.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -274,16 +273,12 @@ namespace MyhotelApi.Database.Migrations
             modelBuilder.Entity("MyhotelApi.Objects.Entities.Review", b =>
                 {
                     b.HasOne("MyhotelApi.Objects.Entities.House", "House")
-                        .WithMany("Reviews")
-                        .HasForeignKey("HouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyhotelApi.Objects.Entities.AppUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HouseId");
+
+                    b.HasOne("MyhotelApi.Objects.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("House");
 
@@ -293,31 +288,16 @@ namespace MyhotelApi.Database.Migrations
             modelBuilder.Entity("MyhotelApi.Objects.Entities.Room", b =>
                 {
                     b.HasOne("MyhotelApi.Objects.Entities.House", "House")
-                        .WithMany("Rooms")
-                        .HasForeignKey("HouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("HouseId");
 
                     b.HasOne("MyhotelApi.Objects.Entities.Reservation", "Reservation")
                         .WithMany("Rooms")
-                        .HasForeignKey("ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReservationId");
 
                     b.Navigation("House");
 
                     b.Navigation("Reservation");
-                });
-
-            modelBuilder.Entity("MyhotelApi.Objects.Entities.House", b =>
-                {
-                    b.Navigation("Amenities");
-
-                    b.Navigation("Reservations");
-
-                    b.Navigation("Reviews");
-
-                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("MyhotelApi.Objects.Entities.Reservation", b =>

@@ -2,7 +2,7 @@
 
 namespace MyhotelApi.Database.ConcreteTypeRepositories;
 
-public interface IUserRepository : IGenericRepository<AppUser>
+public interface IUserRepository : IGenericRepository<User>
 {
-    ValueTask<AppUser?> CheckEmailExistAsync(string email);
+    ValueTask<User?> CheckEmailExistAsync(string email);
 }

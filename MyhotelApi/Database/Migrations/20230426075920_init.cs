@@ -88,8 +88,8 @@ namespace MyhotelApi.Database.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    HouseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: true),
+                    HouseId = table.Column<Guid>(type: "uuid", nullable: true),
                     Comment = table.Column<string>(type: "text", nullable: true),
                     Rating = table.Column<decimal>(type: "numeric", nullable: false)
                 },
@@ -100,14 +100,12 @@ namespace MyhotelApi.Database.Migrations
                         name: "FK_Reviews_Hotels_HouseId",
                         column: x => x.HouseId,
                         principalTable: "Hotels",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Reviews_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -115,12 +113,13 @@ namespace MyhotelApi.Database.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    HouseId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ReservationId = table.Column<Guid>(type: "uuid", nullable: false),
+                    HouseId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ReservationId = table.Column<Guid>(type: "uuid", nullable: true),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Capacity = table.Column<int>(type: "integer", nullable: false),
                     PricePerNight = table.Column<decimal>(type: "numeric", nullable: false),
-                    RoomAvatarPath = table.Column<string>(type: "text", nullable: true)
+                    RoomAvatarPath = table.Column<string>(type: "text", nullable: true),
+                    Gallery = table.Column<List<string>>(type: "text[]", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -129,14 +128,12 @@ namespace MyhotelApi.Database.Migrations
                         name: "FK_Rooms_Hotels_HouseId",
                         column: x => x.HouseId,
                         principalTable: "Hotels",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Rooms_Reservations_ReservationId",
                         column: x => x.ReservationId,
                         principalTable: "Reservations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -144,10 +141,10 @@ namespace MyhotelApi.Database.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    RoomId = table.Column<Guid>(type: "uuid", nullable: false),
-                    HouseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RoomId = table.Column<Guid>(type: "uuid", nullable: true),
+                    HouseId = table.Column<Guid>(type: "uuid", nullable: true),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    IsFree = table.Column<bool>(type: "boolean", nullable: false)
+                    IsFree = table.Column<bool>(type: "boolean", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -156,14 +153,12 @@ namespace MyhotelApi.Database.Migrations
                         name: "FK_Amenities_Hotels_HouseId",
                         column: x => x.HouseId,
                         principalTable: "Hotels",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Amenities_Rooms_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Rooms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

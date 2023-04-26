@@ -1,9 +1,8 @@
-﻿
+﻿using MyhotelApi.Objects.Options;
 
+namespace MyhotelApi.Objects.Models;
 
-namespace MyhotelApi.Objects.Models
+public class RoomFilterDto : PaginationParams
 {
-    public class RoomFilterDto
-    {
-    }
+
 }

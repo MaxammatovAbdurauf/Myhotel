@@ -98,7 +98,7 @@ public static class ServiceCollection
         services.AddDbContext<AppDbContext>(options =>
         {
             options.UseNpgsql(configuration.GetConnectionString("Database"));
-           // options.UseLazyLoadingProxies(true);
+            options.UseLazyLoadingProxies(true);
         });
     }
 

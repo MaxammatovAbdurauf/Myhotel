@@ -18,5 +18,5 @@ public class Reservation
     public virtual House? House { get; set; }
 
     [ForeignKey(nameof(UserId))]
-    public virtual AppUser? User { get; set; }
+    public virtual User? User { get; set; }
 }

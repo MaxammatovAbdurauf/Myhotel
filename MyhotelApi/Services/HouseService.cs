@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using Myhotel.Services;
+using MyhotelApi.Database.ConcreteTypeRepositories;
 using MyhotelApi.Database.IRepositories;
 using MyhotelApi.Helpers.AddServiceFromAttribute;
 using MyhotelApi.Objects.Entities;
@@ -15,7 +16,7 @@ public class HouseService : IHouseService
 {
     private readonly IUnitOfWork unitOfWork;
 
-    public HouseService(IUnitOfWork unitOfWork)
+    public HouseService(UnitOfWork unitOfWork)
     {
         this.unitOfWork = unitOfWork;
     }
@@ -31,7 +32,6 @@ public class HouseService : IHouseService
         house.UpdatedDate = DateTime.Now;
         house.Status = EHouseStatus.active;
 
-        //bunday namedagi house bor yoki yo`qligini validationda tekshir
         await unitOfWork.houseRepository.AddAsync(house);
 
         return houseId;
@@ -56,14 +56,14 @@ public class HouseService : IHouseService
             if (houseFilterDto.PricePerNight != null) query.Where(h => h.PricePerNight == houseFilterDto.PricePerNight);
             if (houseFilterDto.Rating != null) query.Where(h => h.Rating == houseFilterDto.Rating);
 
-            /*if (houseFilterDto.Amenities != null)
+            if (houseFilterDto.Amenities != null)
             {
                 query = query.Where(h =>
                     !houseFilterDto.Amenities.All(amenity =>
                         !h.Amenities!.Contains(amenity)
                     )
                 );
-            }*/
+            }
 
             if (houseFilterDto.Status != null)
             {
@@ -111,7 +111,7 @@ public class HouseService : IHouseService
         if (updateHouseDto.ZipCode != null) house.ZipCode = updateHouseDto.ZipCode;
 
         if (updateHouseDto.PricePerNight != null) house.PricePerNight = updateHouseDto.PricePerNight;
-        //if (updateHouseDto.GalleryPaths != null) house.GalleryPaths = updateHouseDto.GalleryPaths;
+        if (updateHouseDto.GalleryPaths != null) house.GalleryPaths = updateHouseDto.GalleryPaths;
         if (updateHouseDto.HouseAvatarPath != null) house.HouseAvatarPath = updateHouseDto.HouseAvatarPath;
 
         if (updateHouseDto.Status != null &&

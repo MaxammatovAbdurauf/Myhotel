@@ -23,7 +23,7 @@ public class AccountService : IAccountService
 
     public async ValueTask<Guid> AddUserAsync(SignInUserDto signInUserDto)
     {
-        var user = signInUserDto.Adapt<AppUser>();
+        var user = signInUserDto.Adapt<User>();
         var userId = Guid.NewGuid();
         user.Id = userId;
         user.Role = RoleType.Creator;
@@ -46,7 +46,7 @@ public class AccountService : IAccountService
 
     public async ValueTask<UserView> UpdateUserAsync(Guid userId, UpdateUserDto updateUserDto)
     {
-        var user = updateUserDto.Adapt<AppUser>();
+        var user = updateUserDto.Adapt<User>();
         user.Id = userId;
         var updatedUser = await unitOfWork.userRepository.UpdateAsync(user);
         return updatedUser.Adapt<UserView>();
@@ -58,7 +58,7 @@ public class AccountService : IAccountService
         if (fullyDelete) await unitOfWork.userRepository.RemoveAsync(currentUser);
         else
         {
-            var user = new AppUser
+            var user = new User
             {
                 Id = userId,
                 //Status = EUserStatus.deleted
@@ -68,7 +68,7 @@ public class AccountService : IAccountService
 
     }
 
-    public async ValueTask<AppUser?> CheckEmailExistAsync(string email)
+    public async ValueTask<User?> CheckEmailExistAsync(string email)
     {
         var user = await unitOfWork.userRepository.CheckEmailExistAsync(email);
         return user;

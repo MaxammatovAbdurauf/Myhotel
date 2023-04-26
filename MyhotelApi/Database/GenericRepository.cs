@@ -18,7 +18,6 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     public async ValueTask AddAsync(TEntity entity)
     {
         await DbSet.AddAsync(entity);
-        await context.SaveChangesAsync();
     }
 
     public async ValueTask AddRangeAsync(IEnumerable<TEntity> entities)
