@@ -45,7 +45,40 @@ public class ReservationService : IReservationService
 
         if (reservationFilterDto != null)
         {
+            if (reservationFilterDto.NumGuests != null) 
+                query = query.Where(res => res.NumGuests == reservationFilterDto.NumGuests);
 
+            if (reservationFilterDto.IsPaid != null)
+                query = query.Where(res => res.IsPaid == reservationFilterDto.IsPaid);
+
+            if (reservationFilterDto.UserId != null)
+                query = query.Where(res => res.UserId == reservationFilterDto.UserId);
+
+            if (reservationFilterDto.CheckInDate != null)
+                query = query.Where(res => res.CheckInDate >= reservationFilterDto.CheckInDate);
+
+            if (reservationFilterDto.CheckOutDate != null)
+                query = query.Where(res => res.CheckOutDate <= reservationFilterDto.CheckOutDate);
+
+            if (reservationFilterDto.HouseId != null)
+                query = query.Where(res => res.HouseId == reservationFilterDto.HouseId);
+
+            if (reservationFilterDto.TotalPrice != null)
+                query = query.Where(res => res.TotalPrice == reservationFilterDto.TotalPrice);
+
+            if (reservationFilterDto.CreatedDate != null)
+                query = query.Where(res => res.CreatedDate == reservationFilterDto.CreatedDate);
+
+            if (reservationFilterDto.Status != null)
+            {
+                query = reservationFilterDto.Status switch
+                {
+                    EReservationStatus.created  => query.Where(res => res.Status == EReservationStatus.created),
+                    EReservationStatus.inactive => query.Where(res => res.Status == EReservationStatus.inactive),
+                    EReservationStatus.active   => query.Where(res => res.Status == EReservationStatus.active),
+                    EReservationStatus.deleted  => query.Where(res => res.Status == EReservationStatus.deleted),
+                };
+            }
         }
 
         var reservations = await query.ToListAsync();

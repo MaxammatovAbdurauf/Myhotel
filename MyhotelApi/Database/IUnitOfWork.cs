@@ -9,5 +9,6 @@ public interface IUnitOfWork
     public IRoomRepository roomRepository { get;}
     public IReservationRepository reservationRepository { get;}
     public IReviewRepository reviewRepository { get;}   
+    public IAmenityRepository amenityRepository { get;}   
     int Save();
 }

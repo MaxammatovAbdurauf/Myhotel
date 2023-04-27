@@ -7,8 +7,8 @@ namespace MyhotelApi.Services.IServices;
 public interface IAmenityService
 {
     ValueTask<Guid> AddAmenityAsync(CreateAmenityDto createAmenityDto);
-    ValueTask<List<AmenityView>> GetAmenitysAsync();
+    ValueTask<List<AmenityView>> GetAmenitysAsync(AmenityFilterDto? amenityFilterDto = null);
     ValueTask<AmenityView> GetAmenityByIdAsync(Guid amenityId);
     ValueTask<AmenityView> UpdateAmenityAsync(UpdateAmenityDto updateAmenityDto);
-    ValueTask DeleteAmenityAsync(Guid amenityId, bool deleteFromDataBase = false);
+    ValueTask<AmenityView> DeleteAmenityAsync(Guid amenityId);
 }

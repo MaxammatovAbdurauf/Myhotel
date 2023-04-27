@@ -62,6 +62,16 @@ public class UnitOfWork : IUnitOfWork
         }
     }
 
+    private IAmenityRepository? _amenityRepository { get; set; }
+    public IAmenityRepository amenityRepository
+    {
+        get
+        {
+            if (_amenityRepository is null) _amenityRepository = new AmenityRepository(context);
+            return _amenityRepository;
+        }
+    }
+
     public int Save()
     {
         return 0;
