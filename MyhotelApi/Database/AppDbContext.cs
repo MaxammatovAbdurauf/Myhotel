@@ -11,6 +11,6 @@ public class AppDbContext : DbContext
     public virtual DbSet<House> Houses { get; set; }
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<Review> Reviews { get; set; }
-    public DbSet<Reservation> Reservations { get; set; }
-    public DbSet<Amenity> Amenities { get; set; }
+    public virtual DbSet<Reservation> Reservations { get; set; }
+    public virtual DbSet<Amenity> Amenities { get; set; }
 }
