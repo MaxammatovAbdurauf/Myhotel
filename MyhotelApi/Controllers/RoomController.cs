@@ -4,6 +4,7 @@ using MyhotelApi.Objects.Models;
 using MyhotelApi.Objects.Options;
 using MyhotelApi.Services;
 using MyhotelApi.Services.IServices;
+using StackExchange.Redis;
 
 namespace MyhotelApi.Controllers;
 
@@ -12,6 +13,7 @@ namespace MyhotelApi.Controllers;
 public class RoomController : ControllerBase
 {
     private readonly IRoomService roomService;
+    private object jwtService;
 
     public RoomController(RoomService roomService)
     {
@@ -35,7 +37,7 @@ public class RoomController : ControllerBase
 
     [HttpGet("all")]
     [Role(RoleType.Admin)]
-    public async ValueTask<IActionResult> GetRoomsAsync(RoomFilterDto? RoomFilterDto = null)
+    public async ValueTask<IActionResult> GetRoomsAsync( [FromQuery] RoomFilterDto? RoomFilterDto = null)
     {
         var rooms = await roomService.GetRoomsAsync(RoomFilterDto);
         return Ok(rooms);
@@ -56,4 +58,22 @@ public class RoomController : ControllerBase
         var deletedRoom = await roomService.DeleteRoomAsync(roomId);
         return Ok(deletedRoom);
     }
+
+    /*private async Task<Tuple<Guid, string>> CheckTokenData(string token, Guid? roomId = null)
+    {
+        var principal = jwtService.GetPrincipal(token);
+        var userId = Guid.Parse(principal!.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
+        var role = principal!.FindFirst(c => c.Type == ClaimTypes.Role)!.Value;
+
+        if (roomId != null)
+        {
+            var room = await roomService.GetRoomByIdAsync(roomId!.Value);
+
+            if (room.UserId != userId || role != RoleType.Creator || role != RoleType.Admin)
+            {
+                throw new BadRequestException("you have no access");
+            }
+        }
+        return new Tuple<Guid, string>(userId, role);
+    }*/
 }

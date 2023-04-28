@@ -28,8 +28,8 @@ public class HouseService : IHouseService
 
         house.Id = houseId;
         house.Rating = 0;
-        house.CreatedDate = DateTime.Now;
-        house.UpdatedDate = DateTime.Now;
+        house.CreatedDate = DateTime.UtcNow;
+        house.UpdatedDate = DateTime.UtcNow;
         house.Status = EHouseStatus.active;
 
         await unitOfWork.houseRepository.AddAsync(house);

@@ -99,6 +99,7 @@ public static class ServiceCollection
         {
             options.UseNpgsql(configuration.GetConnectionString("Database"));
             options.UseLazyLoadingProxies(true);
+            //options.EnableSensitiveDataLogging();
         });
     }
 

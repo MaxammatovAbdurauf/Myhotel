@@ -21,6 +21,7 @@ public class UnitOfWork : IUnitOfWork
             return _userRepository;
         }
     }
+    // public IUserRepository userRepository => _userRepository ?? new UserRepository(context);
 
     private IHouseRepository? _houseRepository { get; set; }
     public IHouseRepository houseRepository

@@ -33,7 +33,7 @@ public class ReservationController : ControllerBase
     }
 
     [HttpGet("all")]
-    public async ValueTask<IActionResult> GetReservationsAsync(ReservationFilterDto? reservationFilterDto = null)
+    public async ValueTask<IActionResult> GetReservationsAsync([FromQuery]ReservationFilterDto? reservationFilterDto = null)
     {
         var reservations = await reservationService.GetReservationsAsync(reservationFilterDto);
         return Ok(reservations);

@@ -47,8 +47,12 @@ public class AccountService : IAccountService
 
     public async ValueTask<UserView> UpdateUserAsync(Guid userId, UpdateUserDto updateUserDto)
     {
-        var user = updateUserDto.Adapt<User>();
-        user.Id = userId;
+        var user = await unitOfWork.userRepository.GetAsync(userId);
+
+        if (updateUserDto.Email != null) user.Email = updateUserDto.Email;
+        if (updateUserDto.Password != null) user.Password = updateUserDto.Password;
+        if (updateUserDto.UserName != null) user.UserName = updateUserDto.UserName;
+
         var updatedUser = await unitOfWork.userRepository.UpdateAsync(user);
         return updatedUser.Adapt<UserView>();
     }

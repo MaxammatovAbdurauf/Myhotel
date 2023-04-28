@@ -7,7 +7,7 @@ public interface IGenericRepository<TEntity> where TEntity : class
 {
 
     //Add:C
-    ValueTask AddAsync(TEntity entity);
+    ValueTask<TEntity> AddAsync(TEntity entity);
     ValueTask AddRangeAsync(IEnumerable<TEntity> entity);
 
 

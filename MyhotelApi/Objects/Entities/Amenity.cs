@@ -1,5 +1,4 @@
-﻿using MyhotelApi.Objects.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyhotelApi.Objects.Entities;
 

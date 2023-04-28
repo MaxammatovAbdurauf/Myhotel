@@ -34,7 +34,7 @@ public class JwtService : IJwtService
                     new Claim (ClaimTypes.Role,role)
                 },
 
-                expires: DateTime.Now.AddMinutes(50),
+                expires: DateTime.Now.AddDays(1),
                 signingCredentials: securityKey);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

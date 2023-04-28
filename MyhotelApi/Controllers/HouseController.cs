@@ -41,7 +41,7 @@ public class HouseController : ControllerBase
 
     [HttpGet("all")]
     [Role(RoleType.Creator, RoleType.Admin)]
-    public async Task<IActionResult> GetHousesAsync(HouseFilterDto? houseFilterDto = null)
+    public async Task<IActionResult> GetHousesAsync([FromQuery]HouseFilterDto? houseFilterDto = null)
     {
         var houses = await houseService.GetHousesAsync(houseFilterDto);
         return Ok(houses);
@@ -61,7 +61,7 @@ public class HouseController : ControllerBase
     {
         var role = (await CheckTokenData(HttpContext.Request.Headers.Authorization, houseId)).Item2;
 
-        if (role != "owner" || role != "admin")
+        if (role != RoleType.Creator|| role != RoleType.Admin)
         {
             var updatedHouse = await houseService.DeleteHouseAsync(houseId);
             return Ok(updatedHouse);

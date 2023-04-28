@@ -15,14 +15,17 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     }
 
     //Add:C
-    public async ValueTask AddAsync(TEntity entity)
+    public async ValueTask<TEntity?> AddAsync(TEntity entity)
     {
-        await DbSet.AddAsync(entity);
+        var entry = await DbSet.AddAsync(entity);
+        await context.SaveChangesAsync();
+        return entry.Entity;
     }
 
     public async ValueTask AddRangeAsync(IEnumerable<TEntity> entities)
     {
         await DbSet.AddRangeAsync(entities);
+
         await context.SaveChangesAsync();
     }
 

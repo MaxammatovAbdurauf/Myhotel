@@ -34,7 +34,7 @@ public class ReviewController : ControllerBase
     }
 
     [HttpGet("all")]
-    public async ValueTask<IActionResult> GetReviewsAsync(ReviewFilterDto? reviewFilterDto = null)
+    public async ValueTask<IActionResult> GetReviewsAsync([FromQuery] ReviewFilterDto? reviewFilterDto = null)
     {
         var reviews = await reviewService.GetReviewsAsync(Guid.NewGuid(), reviewFilterDto);
         return Ok(reviews);

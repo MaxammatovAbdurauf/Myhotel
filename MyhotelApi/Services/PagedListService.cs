@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyhotelApi.Helpers.AddServiceFromAttribute;
 using MyhotelApi.Objects.Options;
 using Newtonsoft.Json;
 
 namespace Myhotel.Services;
 
-[Scoped]
 public static class PagedListService
 {
     public static async Task<IEnumerable<T>> ToPagedListAsync<T>(this IQueryable<T> source, PaginationParams? pageParams)
@@ -14,7 +12,7 @@ public static class PagedListService
         pageParams ??= new PaginationParams();
 
         // write pagination parameters (CurrentPage, PageSize, TotalPage) into header:
-        HttpContextHelper.AddResponceHeader("X-pagination",
+        HttpContextHelper.AddResponseHeader("X-pagination",
             JsonConvert.SerializeObject(new PaginationMetaData(source.Count(), pageParams.Page, pageParams.Size)));
 
         var pagedList = await source.Skip(pageParams.Size * (pageParams.Page - 1)).Take(pageParams.Size).ToListAsync();
@@ -28,7 +26,7 @@ public static class PagedListService
         pageParams ??= new PaginationParams(); // to prevent null exception, then pageParams get default values:
 
         // write pagination parameters (CurrentPage, PageSize, TotalPage) into header:
-        HttpContextHelper.AddResponceHeader("X-pagination",
+        HttpContextHelper.AddResponseHeader("X-pagination",
             JsonConvert.SerializeObject(new PaginationMetaData(source.Count(), pageParams.Page, pageParams.Size)));
 
         var pagedList = source.Skip(pageParams.Size * (pageParams.Page - 1)).Take(pageParams.Size).ToList();
@@ -39,17 +37,15 @@ public static class PagedListService
 
 public class HttpContextHelper
 {
-    public static IHttpContextAccessor? httpContextAccessor;
+    public static IHttpContextAccessor Accessor;
+    public static HttpContext Current => Accessor?.HttpContext;
 
-    public static HttpContext Current => httpContextAccessor.HttpContext;
-
-    public static void AddResponceHeader(string key, string value)
+    public static void AddResponseHeader(string key, string value)
     {
-        if (Current.Response.Headers.Keys.Contains(key) == true)
-        {
+        if (Current?.Response.Headers.Keys.Contains(key) == true)
             Current.Response.Headers.Remove(key);
-        }
-        Current.Response.Headers.Add("Access-Control-Expose-Headers", key);
-        Current.Response.Headers.Add(key, value);
+
+        Current?.Response.Headers.Add("Access-Control-Expose-Headers", key);
+        Current?.Response.Headers.Add(key, value);
     }
 }

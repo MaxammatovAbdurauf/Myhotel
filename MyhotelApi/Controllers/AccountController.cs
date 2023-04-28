@@ -35,11 +35,15 @@ public class AccountController : ControllerBase
     [HttpPost("signin")]
     public async Task<IActionResult> SignIn([FromBody] SignInUserDto signInUserDto)
     {
-        var confirmationNumber = await CheckAndSendEmail(signInUserDto);
+        /*var confirmationNumber = await CheckAndSendEmail(signInUserDto);
         var currentUserData = JsonConvert.SerializeObject(signInUserDto);
         await cacheDb.StringSetAsync(confirmationNumber, currentUserData, TimeSpan.FromMinutes(ExpiryCacheTimeInMinutes));
+        
+        return Ok(confirmationNumber);*/
+        var user = await userService.AddUserAsync(signInUserDto);
 
-        return Ok(confirmationNumber);
+        var token = jwtService.GenerateToken(user.Id.ToString(), user.Role.ToString());
+        return Ok(token);
     }
 
     [HttpPost("save")]
@@ -99,7 +103,7 @@ public class AccountController : ControllerBase
     {
         var userData = CheckTokenData(HttpContext.Request.Headers[HeaderNames.Authorization]);
 
-        if (userData.Item2 == "admin" || userData.Item2 == "owner") await userService.DeleteUserAsync(userId!.Value, fullyDelete: true);
+        if (userData.Item2 == RoleType.Admin || userData.Item2 == RoleType.Creator) await userService.DeleteUserAsync(userId!.Value, fullyDelete: true);
         else await userService.DeleteUserAsync(userData.Item1);
 
         return Ok();

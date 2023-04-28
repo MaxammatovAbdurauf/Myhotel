@@ -31,7 +31,7 @@ public class JwtAuthoriseAttribute : ActionFilterAttribute
         var claimPrincipal = jwtService.GetPrincipal(authorisationToken!);
         var userRole = claimPrincipal!.FindFirst(claim => claim.Type == ClaimTypes.Role)!.Value;
        
-        if (userRole != RoleType.Creator)
+        if (userRole == RoleType.Creator)
         {
 
         }
