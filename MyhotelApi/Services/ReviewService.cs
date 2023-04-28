@@ -3,6 +3,7 @@ using Myhotel.Services;
 using MyhotelApi.Database.ConcreteTypeRepositories;
 using MyhotelApi.Database.IRepositories;
 using MyhotelApi.Helpers.AddServiceFromAttribute;
+using MyhotelApi.Helpers.Exceptions;
 using MyhotelApi.Objects.Entities;
 using MyhotelApi.Objects.Enums;
 using MyhotelApi.Objects.Models;
@@ -21,24 +22,29 @@ public class ReviewService : IReviewService
         this.unitOfWork = unitOfWork;
     }
 
-    public async ValueTask<Guid> AddReviewAsync(CreateReviewDto createReviewDto)
+    public async ValueTask<ReviewView> AddReviewAsync(CreateReviewDto createReviewDto)
     {
         var reviewId = Guid.NewGuid();
         var review   = createReviewDto.Adapt<Review>();
 
         review.Id    = reviewId;
-        review.createdDate = DateTime.Now;
+        review.createdDate = DateTime.UtcNow;
         review.Status = EReviewStatus.created;
 
-        await unitOfWork.reviewRepository.AddAsync(review);
+        var newReview = await unitOfWork.reviewRepository.AddAsync(review);
 
-        return reviewId;
+        if (newReview is null) throw new BadRequestException("some error with this review");   
+        else
+        return newReview.Adapt<ReviewView>();
     }
 
     public async ValueTask<ReviewView> GetReviewByIdAsync(Guid reviewId)
     {
         var review = await unitOfWork.reviewRepository.GetAsync(reviewId);
-        return review.Adapt<ReviewView>();
+
+        if (review is null) throw new NotFoundException<Review>();
+        else  
+            return review.Adapt<ReviewView>();
     }
 
     public async ValueTask<List<ReviewView>> GetReviewsAsync(Guid houseId, ReviewFilterDto? reviewFilterDto = null)
@@ -67,41 +73,49 @@ public class ReviewService : IReviewService
         }
 
         var reviews = await query.ToPagedListAsync(reviewFilterDto);
+
         return reviews.Select(r => r.Adapt<ReviewView>()).ToList();
     }
 
     public async ValueTask<ReviewView> UpdateReviewAsync(UpdateReviewDto updateReviewDto)
     {
-        var review = await unitOfWork.reviewRepository.GetAsync(updateReviewDto.Id.Value);
+        var review = await unitOfWork.reviewRepository.GetAsync(updateReviewDto.Id);
 
-        if (updateReviewDto.Comment != null) review.Comment = updateReviewDto.Comment;
-        if (updateReviewDto.Rating  != null) review.Rating  = updateReviewDto.Rating;
+        if (review is null) throw new NotFoundException<Review>();
+        else
+        {
+            if (updateReviewDto.Comment != null) review.Comment = updateReviewDto.Comment;
+            if (updateReviewDto.Rating != null) review.Rating = updateReviewDto.Rating;
 
-        if (updateReviewDto.Status != null &&
-            updateReviewDto.Status != EReviewStatus.created &&
-            updateReviewDto.Status != EReviewStatus.deleted) review.Comment = updateReviewDto.Comment;
+            if (updateReviewDto.Status != null &&
+                updateReviewDto.Status != EReviewStatus.created &&
+                updateReviewDto.Status != EReviewStatus.deleted) review.Comment = updateReviewDto.Comment;
 
-        var updatedReview = await unitOfWork.reviewRepository.UpdateAsync(review);
+            var updatedReview = await unitOfWork.reviewRepository.UpdateAsync(review);
 
-        return updatedReview.Adapt<ReviewView>();
+            return updatedReview!.Adapt<ReviewView>();
+        }
     }
 
     public async ValueTask<ReviewView> DeleteReviewAsync(Guid reviewId, bool deleteFromDataBase = false)
     {
         var review = await unitOfWork.reviewRepository.GetAsync(reviewId);
 
-        if (deleteFromDataBase)
-        {
-            var deletedReview = await unitOfWork.reviewRepository.RemoveAsync(review);
-            return deletedReview.Adapt<ReviewView>();
-        }
+        if (review is null) throw new NotFoundException<Review>();
         else
         {
-            review.Status = EReviewStatus.deleted;
-            var updatedReview = await unitOfWork.reviewRepository.UpdateAsync(review);
+            if (deleteFromDataBase)
+            {
+                var deletedReview = await unitOfWork.reviewRepository.RemoveAsync(review);
+                return deletedReview!.Adapt<ReviewView>();
+            }
+            else
+            {
+                review.Status = EReviewStatus.deleted;
+                var updatedReview = await unitOfWork.reviewRepository.UpdateAsync(review);
 
-            return updatedReview.Adapt<ReviewView>();
-        }
-     
+                return updatedReview!.Adapt<ReviewView>();
+            }
+        }  
     }
 }

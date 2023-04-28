@@ -5,6 +5,7 @@ using MyhotelApi.Objects.Options;
 using MyhotelApi.Services;
 using MyhotelApi.Services.IServices;
 using StackExchange.Redis;
+using System.Security.Claims;
 
 namespace MyhotelApi.Controllers;
 
@@ -13,11 +14,12 @@ namespace MyhotelApi.Controllers;
 public class RoomController : ControllerBase
 {
     private readonly IRoomService roomService;
-    private object jwtService;
+    private readonly IJwtService jwtService;
 
-    public RoomController(RoomService roomService)
+    public RoomController(RoomService roomService, IJwtService jwtService)
     {
         this.roomService = roomService;
+        this.jwtService = jwtService;
     }
 
     [HttpPost]

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MyhotelApi.Database.ConcreteTypeRepositories;
 using MyhotelApi.Database.IRepositories;
 using MyhotelApi.Helpers.AddServiceFromAttribute;
+using MyhotelApi.Helpers.Exceptions;
 using MyhotelApi.Objects.Entities;
 using MyhotelApi.Objects.Enums;
 using MyhotelApi.Objects.Models;
@@ -21,22 +22,29 @@ public class ReservationService : IReservationService
         this.unitOfWork = unitOfWork;   
     }
 
-    public async ValueTask<Guid> AddReservationAsync(CreateReservationDto createReservationDto)
+    public async ValueTask<ReservationView> AddReservationAsync(CreateReservationDto createReservationDto)
     {
         var reservationId = Guid.NewGuid();
-        var reservation = createReservationDto.Adapt<Reservation>();
-        reservation.Id  = reservationId;
-        reservation.CreatedDate = DateTime.Now;
+        var reservation   = createReservationDto.Adapt<Reservation>();
 
-        await unitOfWork.reservationRepository.AddAsync(reservation);
+        reservation.Id = reservationId;
+        reservation.Status = EReservationStatus.created;
+        reservation.CreatedDate = DateTime.UtcNow;
+        reservation.CheckOutDate = DateTime.UtcNow;
+        reservation.CheckInDate = DateTime.UtcNow;
 
-        return reservationId;
+        var newReservation = await unitOfWork.reservationRepository.AddAsync(reservation);
+
+        return newReservation.Adapt<ReservationView>();
     }
 
     public async ValueTask<ReservationView> GetReservationByIdAsync(Guid reservationId)
     {
-        var reservations = await unitOfWork.reservationRepository.GetAsync(reservationId);
-        return reservations.Adapt<ReservationView>();
+        var reservation = await unitOfWork.reservationRepository.GetAsync(reservationId);
+
+        if (reservation is null) throw new NotFoundException<Reservation>();
+        else 
+           return reservation.Adapt<ReservationView>();
     }
 
     public async ValueTask<List<ReservationView>> GetReservationsAsync(ReservationFilterDto? reservationFilterDto = null)
@@ -77,6 +85,7 @@ public class ReservationService : IReservationService
                     EReservationStatus.inactive => query.Where(res => res.Status == EReservationStatus.inactive),
                     EReservationStatus.active   => query.Where(res => res.Status == EReservationStatus.active),
                     EReservationStatus.deleted  => query.Where(res => res.Status == EReservationStatus.deleted),
+                    _ => query
                 };
             }
         }
@@ -88,28 +97,35 @@ public class ReservationService : IReservationService
 
     public async ValueTask<ReservationView> UpdateReservationAsync(UpdateReservationDto updateReservationDto)
     {
-        var reservation = await unitOfWork.reservationRepository.GetAsync(updateReservationDto.Id.Value);
-               
-        var updatedReservation = await unitOfWork.reservationRepository.UpdateAsync(reservation);
+        var reservation = await unitOfWork.reservationRepository.GetAsync(updateReservationDto.Id!.Value);
 
-        return updatedReservation.Adapt<ReservationView>();
+        if (reservation is null) throw new NotFoundException<Reservation>();
+        else
+        {
+            var updatedReservation = await unitOfWork.reservationRepository.UpdateAsync(reservation);
+            // code for the updating properties
+            return updatedReservation!.Adapt<ReservationView>();
+        }
     }
 
     public async ValueTask<ReservationView> DeleteReservationAsync(Guid reservationId, bool deleteFromDataBase = false)
     {
         var reservation = await unitOfWork.reservationRepository.GetAsync(reservationId);
 
-        if (deleteFromDataBase)
-        {
-            var deletedReseravtion = await unitOfWork.reservationRepository.RemoveAsync(reservation);
-            return deletedReseravtion.Adapt<ReservationView>();
-        }
+        if (reservation is null) throw new NotFoundException<Reservation>();
         else
         {
-            reservation.Status = EReservationStatus.deleted; ;
-            var updatedReservation = await unitOfWork.reservationRepository.UpdateAsync(reservation);
-            return updatedReservation.Adapt<ReservationView>();
-        }
-        
+            if (deleteFromDataBase)
+            {
+                var deletedReseravtion = await unitOfWork.reservationRepository.RemoveAsync(reservation);
+                return deletedReseravtion!.Adapt<ReservationView>();
+            }
+            else
+            {
+                reservation.Status = EReservationStatus.deleted; ;
+                var updatedReservation = await unitOfWork.reservationRepository.UpdateAsync(reservation);
+                return updatedReservation!.Adapt<ReservationView>();
+            }
+        }      
     }
 }

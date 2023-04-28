@@ -4,6 +4,8 @@ using MyhotelApi.Objects.Models;
 using MyhotelApi.Objects.Options;
 using MyhotelApi.Services;
 using MyhotelApi.Services.IServices;
+using Newtonsoft.Json.Linq;
+using System.Security.Claims;
 
 namespace MyhotelApi.Controllers;
 
@@ -13,17 +15,23 @@ namespace MyhotelApi.Controllers;
 public class ReviewController : ControllerBase
 {
     private readonly IReviewService reviewService;
+    private readonly IJwtService jwtService;
 
-    public ReviewController(ReviewService reviewService)
+    public ReviewController(ReviewService reviewService, IJwtService jwtService)
     {
         this.reviewService = reviewService;
+        this.jwtService = jwtService;
     }
 
     [HttpPost]
     public async ValueTask<IActionResult> AddReviewAsync(CreateReviewDto createReviewDto)
     {
-        var reviewId = await reviewService.AddReviewAsync(createReviewDto);
-        return Ok(reviewId);
+        var userId = (await CheckTokenData(HttpContext.Request.Headers.Authorization)).Item1;
+        createReviewDto.UserId = userId;
+
+        var newReview = await reviewService.AddReviewAsync(createReviewDto);
+
+        return Ok(newReview);
     }
 
     [HttpGet]
@@ -34,9 +42,9 @@ public class ReviewController : ControllerBase
     }
 
     [HttpGet("all")]
-    public async ValueTask<IActionResult> GetReviewsAsync([FromQuery] ReviewFilterDto? reviewFilterDto = null)
+    public async ValueTask<IActionResult> GetReviewsAsync(Guid houseId, [FromQuery] ReviewFilterDto? reviewFilterDto = null)
     {
-        var reviews = await reviewService.GetReviewsAsync(Guid.NewGuid(), reviewFilterDto);
+        var reviews = await reviewService.GetReviewsAsync(houseId, reviewFilterDto);
         return Ok(reviews);
     }
 
@@ -52,5 +60,24 @@ public class ReviewController : ControllerBase
     {
         var deletedReview = await reviewService.DeleteReviewAsync(reviewId);
         return Ok(deletedReview);
+    }
+
+    private async Task<Tuple<Guid, string>> CheckTokenData(string token, Guid? reviewId = null)
+    {
+        var principal = jwtService.GetPrincipal(token);
+        var userId = Guid.Parse(principal!.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
+        var role = principal!.FindFirst(c => c.Type == ClaimTypes.Role)!.Value;
+
+        if (reviewId != null)
+        {
+            var review = await reviewService.GetReviewByIdAsync(reviewId!.Value);
+
+            if (review.UserId != userId)
+            {
+                throw new BadRequestException("you have no access");
+            }
+        }
+
+        return new Tuple<Guid, string>(userId, role);
     }
 }

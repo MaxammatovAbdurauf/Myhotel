@@ -1,6 +1,4 @@
-﻿using MyhotelApi.Objects.Enums;
-
-namespace MyhotelApi.Objects.Models;
+﻿namespace MyhotelApi.Objects.Models;
 
 public class UpdateReservationDto
 {

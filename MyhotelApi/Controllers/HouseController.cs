@@ -28,8 +28,8 @@ public class HouseController : ControllerBase
         var userId = (await CheckTokenData(HttpContext.Request.Headers.Authorization)).Item1;
         createHouseDto.UserId = userId;
 
-        var houseId = await houseService.AddHouseAsync(createHouseDto);
-        return Ok(houseId);
+        var house = await houseService.AddHouseAsync(createHouseDto);
+        return Ok(house);
     }
 
     [HttpGet]

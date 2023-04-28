@@ -21,20 +21,20 @@ public class HouseService : IHouseService
         this.unitOfWork = unitOfWork;
     }
 
-    public async ValueTask<Guid> AddHouseAsync(CreateHouseDto createHouseDto)
+    public async ValueTask<HouseView> AddHouseAsync(CreateHouseDto createHouseDto)
     {
         var houseId = Guid.NewGuid();
-        var house = createHouseDto.Adapt<House>();
+        var house   = createHouseDto.Adapt<House>();
 
-        house.Id = houseId;
+        house.Id     = houseId;
         house.Rating = 0;
         house.CreatedDate = DateTime.UtcNow;
         house.UpdatedDate = DateTime.UtcNow;
-        house.Status = EHouseStatus.active;
+        house.Status      = EHouseStatus.active;
 
-        await unitOfWork.houseRepository.AddAsync(house);
+        var newHouse = await unitOfWork.houseRepository.AddAsync(house);
 
-        return houseId;
+        return newHouse.Adapt<HouseView>();
     }
 
     public async ValueTask<HouseView> GetHouseByIdAsync(Guid houseId)

@@ -6,6 +6,7 @@ namespace MyhotelApi.Objects.Views;
 public class ReservationView
 {
     public Guid Id { get; set; } // Unique identifier for the reservation
+    public Guid? UserId { get; set; } // Unique identifier for the user who reserved the room(s)
     public Guid HouseId { get; set; } // Identifier for the house that the room(s) reserved is belong to
     public EReservationStatus? Status { get; set; }
     public DateTime CheckInDate { get; set; } // Date and time of check-in

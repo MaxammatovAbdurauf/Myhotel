@@ -5,7 +5,7 @@ namespace MyhotelApi.Services.IServices;
 
 public interface IReservationService
 {
-    ValueTask<Guid> AddReservationAsync(CreateReservationDto createReservationDto);
+    ValueTask<ReservationView> AddReservationAsync(CreateReservationDto createReservationDto);
     ValueTask<ReservationView> GetReservationByIdAsync(Guid reservationId);
     ValueTask<List<ReservationView>> GetReservationsAsync(ReservationFilterDto? reservationFilterDto = null);
     ValueTask<ReservationView> UpdateReservationAsync(UpdateReservationDto updateReservationDto);
