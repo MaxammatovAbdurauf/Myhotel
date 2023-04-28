@@ -34,7 +34,7 @@ public class RoomController : ControllerBase
     }
 
     [HttpGet("all")]
-    [Role(RoleType.Creator, RoleType.Admin)]
+    [Role(RoleType.Admin)]
     public async ValueTask<IActionResult> GetRoomsAsync(RoomFilterDto? RoomFilterDto = null)
     {
         var rooms = await roomService.GetRoomsAsync(RoomFilterDto);
@@ -42,7 +42,7 @@ public class RoomController : ControllerBase
     }
 
     [HttpPut]
-    [Role(RoleType.Manager, RoleType.Owner, RoleType.Creator)]
+    [Role(RoleType.Manager, RoleType.Owner)]
     public async ValueTask<IActionResult> UpdateRoomAsync(UpdateRoomDto updateRoomDto)
     {
         var updatedRoom = await roomService.UpdateRoomAsync(updateRoomDto);
@@ -50,7 +50,7 @@ public class RoomController : ControllerBase
     }
 
     [HttpDelete]
-    [Role(RoleType.Manager, RoleType.Owner,RoleType.Creator)]
+    [Role(RoleType.Manager, RoleType.Owner)]
     public async ValueTask<IActionResult> DeleteRoomAsync(Guid roomId)
     {
         var deletedRoom = await roomService.DeleteRoomAsync(roomId);

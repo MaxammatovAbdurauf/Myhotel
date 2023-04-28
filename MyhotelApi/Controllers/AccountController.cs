@@ -48,10 +48,10 @@ public class AccountController : ControllerBase
         if (!cacheDb.KeyExists(confirmationNumber)) return BadRequest("key is incorrect");
 
         var userCacheData = await cacheDb.StringGetAsync(new RedisKey(confirmationNumber));
-        var user = JsonConvert.DeserializeObject<SignInUserDto>(userCacheData.ToString());
-        var userId = await userService.AddUserAsync(user!);
+        var cachedUser = JsonConvert.DeserializeObject<SignInUserDto>(userCacheData.ToString());
+        var user = await userService.AddUserAsync(cachedUser);
 
-        var token = jwtService.GenerateToken(userId.ToString(), "user");
+        var token = jwtService.GenerateToken(user.Id.ToString(), user.Role.ToString());
         return Ok(token);
     }
 
@@ -68,7 +68,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet("all")]
-    [Role(RoleType.Creator, RoleType.Admin)]
+    [Role(RoleType.Admin)]
     public async Task<IActionResult> GetUsers()
     {
         var users = await userService.GetUsersAsync();

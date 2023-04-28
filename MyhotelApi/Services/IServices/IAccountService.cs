@@ -6,7 +6,7 @@ namespace MyhotelApi.Services.IServices;
 
 public interface IAccountService
 {
-    ValueTask<Guid> AddUserAsync(SignInUserDto signInUserDto);
+    ValueTask<UserView> AddUserAsync(SignInUserDto signInUserDto);
     ValueTask<List<UserView>> GetUsersAsync();
     ValueTask<UserView> GetUserByIdAsync(Guid userId);
     ValueTask<UserView> UpdateUserAsync(Guid userId, UpdateUserDto updateUserDto);

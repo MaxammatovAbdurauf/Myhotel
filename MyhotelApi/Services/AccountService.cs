@@ -21,7 +21,7 @@ public class AccountService : IAccountService
         this.unitOfWork = unitOfWork;
     }
 
-    public async ValueTask<Guid> AddUserAsync(SignInUserDto signInUserDto)
+    public async ValueTask<UserView> AddUserAsync(SignInUserDto signInUserDto)
     {
         var user = signInUserDto.Adapt<User>();
         var userId = Guid.NewGuid();
@@ -29,7 +29,8 @@ public class AccountService : IAccountService
         user.Role = RoleType.Creator;
 
         await unitOfWork.userRepository.AddAsync(user);
-        return userId;
+        var savedUser = await unitOfWork.userRepository.GetAsync(userId);
+        return savedUser.Adapt<UserView>();
     }
 
     public async ValueTask<UserView> GetUserByIdAsync(Guid userId)

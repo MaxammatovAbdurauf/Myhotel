@@ -2,7 +2,6 @@
 using MyhotelApi.Helpers.Exceptions;
 using MyhotelApi.Objects.Models;
 using MyhotelApi.Objects.Options;
-using MyhotelApi.Objects.Views;
 using MyhotelApi.Services;
 using MyhotelApi.Services.IServices;
 
@@ -15,7 +14,7 @@ public class ReviewController : ControllerBase
 {
     private readonly IReviewService reviewService;
 
-    public ReviewController (ReviewService reviewService)
+    public ReviewController(ReviewService reviewService)
     {
         this.reviewService = reviewService;
     }
@@ -37,8 +36,8 @@ public class ReviewController : ControllerBase
     [HttpGet("all")]
     public async ValueTask<IActionResult> GetReviewsAsync(ReviewFilterDto? reviewFilterDto = null)
     {
-       var reviews = await reviewService.GetReviewsAsync(Guid.NewGuid(),reviewFilterDto);
-       return Ok(reviews);
+        var reviews = await reviewService.GetReviewsAsync(Guid.NewGuid(), reviewFilterDto);
+        return Ok(reviews);
     }
 
     [HttpPut]

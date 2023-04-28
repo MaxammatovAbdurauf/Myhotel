@@ -30,8 +30,13 @@ public class JwtAuthoriseAttribute : ActionFilterAttribute
         var authorisationToken = context.HttpContext.Request.Headers[HeaderNames.Authorization];
         var claimPrincipal = jwtService.GetPrincipal(authorisationToken!);
         var userRole = claimPrincipal!.FindFirst(claim => claim.Type == ClaimTypes.Role)!.Value;
+       
+        if (userRole != RoleType.Creator)
+        {
 
-        /*if (roles.Contains(RoleType.All))  
+        }
+
+        else if (roles.Contains(RoleType.All))  
         {
             if (userRole == RoleType.User  || userRole == RoleType.Manager ||
                 userRole == RoleType.Owner || userRole == RoleType.Admin   ||
@@ -59,15 +64,10 @@ public class JwtAuthoriseAttribute : ActionFilterAttribute
             if (userRole != RoleType.Admin) throw new UnauthorizedAccessException();
         }
 
-        else if (roles.Contains(RoleType.Creator))
-        {
-            if (userRole != RoleType.Creator) throw new UnauthorizedAccessException();
-        }
-
         else
         {
             throw new UnauthorizedAccessException();
-        }*/
+        }
 
         base.OnActionExecuting(context);
     }
