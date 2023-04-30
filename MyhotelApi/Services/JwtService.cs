@@ -64,7 +64,7 @@ public class JwtService : IJwtService
 
         ClaimsPrincipal claimsPrincipal = 
             jwtSecurityTokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
-        
+       
         return claimsPrincipal;
     }
 }

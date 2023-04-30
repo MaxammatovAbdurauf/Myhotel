@@ -69,7 +69,7 @@ public class RoomController : ControllerBase
 
         if (roomId != null)
         {
-            var room = await roomService.GetRoomByIdAsync(roomId!.Value);
+            var room = await roomService.GetHouseByIdAsync(roomId!.Value);
 
             if (room.UserId != userId || role != RoleType.Creator || role != RoleType.Admin)
             {

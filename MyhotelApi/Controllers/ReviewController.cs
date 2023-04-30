@@ -27,9 +27,8 @@ public class ReviewController : ControllerBase
     public async ValueTask<IActionResult> AddReviewAsync(CreateReviewDto createReviewDto)
     {
         var userId = (await CheckTokenData(HttpContext.Request.Headers.Authorization)).Item1;
-        createReviewDto.UserId = userId;
 
-        var newReview = await reviewService.AddReviewAsync(createReviewDto);
+        var newReview = await reviewService.AddReviewAsync(userId, createReviewDto);
 
         return Ok(newReview);
     }

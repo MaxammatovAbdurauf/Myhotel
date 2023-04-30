@@ -103,9 +103,14 @@ public class AccountController : ControllerBase
     {
         var userData = CheckTokenData(HttpContext.Request.Headers[HeaderNames.Authorization]);
 
-        if (userData.Item2 == RoleType.Admin || userData.Item2 == RoleType.Creator) await userService.DeleteUserAsync(userId!.Value, fullyDelete: true);
-        else await userService.DeleteUserAsync(userData.Item1);
-
+        if (userData.Item2 == RoleType.Admin || userData.Item2 == RoleType.Creator) 
+            await userService.DeleteUserAsync(userId!.Value, fullyDelete: true);      
+        else
+        {
+            await userService.DeleteUserAsync(userData.Item1);
+            HttpContext.Request.Headers.Remove(HeaderNames.Authorization);
+        }        
+          
         return Ok();
     }
 

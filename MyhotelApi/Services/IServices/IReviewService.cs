@@ -5,7 +5,7 @@ namespace MyhotelApi.Services.IServices;
 
 public interface IReviewService
 {
-    ValueTask<ReviewView> AddReviewAsync(CreateReviewDto createReviewDto);
+    ValueTask<ReviewView> AddReviewAsync(Guid userId, CreateReviewDto createReviewDto);
     ValueTask<ReviewView> GetReviewByIdAsync(Guid reviewId);
     ValueTask<List<ReviewView>> GetReviewsAsync(Guid houseId,ReviewFilterDto? reviewFilterDto = null);
     ValueTask<ReviewView> UpdateReviewAsync(UpdateReviewDto updateReviewDto);

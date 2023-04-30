@@ -27,9 +27,8 @@ public class ReservationController : ControllerBase
     public async ValueTask<IActionResult> AddReservationAsync(CreateReservationDto createReservationDto)
     {
         var userId = (await CheckTokenData(HttpContext.Request.Headers.Authorization)).Item1;
-        createReservationDto.UserId = userId;
 
-        var newReservation = await reservationService.AddReservationAsync(createReservationDto);
+        var newReservation = await reservationService.AddReservationAsync(userId, createReservationDto);
 
         return Ok(newReservation);
     }

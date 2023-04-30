@@ -22,16 +22,18 @@ public class ReservationService : IReservationService
         this.unitOfWork = unitOfWork;   
     }
 
-    public async ValueTask<ReservationView> AddReservationAsync(CreateReservationDto createReservationDto)
+    public async ValueTask<ReservationView> AddReservationAsync(Guid userId, CreateReservationDto createReservationDto)
     {
+        var currentHouse = await unitOfWork.houseRepository.GetAsync(createReservationDto.HouseId);
+        if (currentHouse is null) throw new NotFoundException<House>();
+
         var reservationId = Guid.NewGuid();
-        var reservation   = createReservationDto.Adapt<Reservation>();
+        var reservation  = createReservationDto.Adapt<Reservation>();
 
         reservation.Id = reservationId;
         reservation.Status = EReservationStatus.created;
         reservation.CreatedDate = DateTime.UtcNow;
-        reservation.CheckOutDate = DateTime.UtcNow;
-        reservation.CheckInDate = DateTime.UtcNow;
+        reservation.UserId = userId;
 
         var newReservation = await unitOfWork.reservationRepository.AddAsync(reservation);
 

@@ -7,5 +7,5 @@ public class NotFoundException : Exception
 
 public class NotFoundException<T> : NotFoundException
 {
-    public NotFoundException() : base($"Given object {typeof(T).Name} is not found") { }
+    public NotFoundException(string? message = " ") : base($"Given object {typeof(T).Name} is not found.{message}") { }
 }

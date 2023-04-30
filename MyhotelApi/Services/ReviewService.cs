@@ -22,14 +22,18 @@ public class ReviewService : IReviewService
         this.unitOfWork = unitOfWork;
     }
 
-    public async ValueTask<ReviewView> AddReviewAsync(CreateReviewDto createReviewDto)
+    public async ValueTask<ReviewView> AddReviewAsync(Guid userId, CreateReviewDto createReviewDto)
     {
+        var currentHouse = await unitOfWork.houseRepository.GetAsync(createReviewDto.HouseId);
+        if (currentHouse is null) throw new NotFoundException<House>();
+
         var reviewId = Guid.NewGuid();
         var review   = createReviewDto.Adapt<Review>();
 
         review.Id    = reviewId;
         review.createdDate = DateTime.UtcNow;
         review.Status = EReviewStatus.created;
+        review.UserId = userId;
 
         var newReview = await unitOfWork.reviewRepository.AddAsync(review);
 
