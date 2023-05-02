@@ -20,8 +20,8 @@ public class HouseView
     public string? HouseAvatarPath { get; set; } // the path of image which is chosen as avatar for the house
     public DateTimeOffset CreatedDate { get; set; } // when this house is added to system 
 
-    public List<ReservationView>? Reservations { get; set; } // List of reservations made for the room
+    /*public List<ReservationView>? Reservations { get; set; } // List of reservations made for the room
     public List<RoomView>? Rooms { get; set; } // List of rooms available in the house
     public List<AmenityView>? Amenities { get; set; } // List of amenities offered by the house
-    public List<ReviewView>? Reviews { get; set; } // List of reviews for the house
+    public List<ReviewView>? Reviews { get; set; } // List of reviews for the house*/
 }

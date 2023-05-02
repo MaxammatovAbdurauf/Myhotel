@@ -2,6 +2,7 @@
 using Microsoft.Net.Http.Headers;
 using MyhotelApi.Objects.Models;
 using MyhotelApi.Objects.Options;
+using MyhotelApi.Objects.Views;
 using MyhotelApi.Services;
 using MyhotelApi.Services.IServices;
 using Newtonsoft.Json;
@@ -72,11 +73,11 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet("all")]
-    [Role(RoleType.Admin)]
-    public async Task<IActionResult> GetUsers()
+    //[Role(RoleType.Admin)]
+    public async Task<List<UserView>> GetUsers()
     {
         var users = await userService.GetUsersAsync();
-        return Ok(users);
+        return users;
     }
 
     [HttpGet]

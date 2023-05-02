@@ -1,0 +1,58 @@
+﻿@page "/house"
+@using Microsoft.Net.Http.Headers
+@using Myhotel.Services
+@using Myhotel.Objects.Views
+
+<h3>Component</h3>
+
+<h1>List of Houses</h1>
+
+@if (Houses == null)
+{
+    <p>Loading... nimadirlar </p>
+}
+else if (Houses.Count == 0)
+{
+    <p>No houses found.</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var house in Houses)
+            {
+                <tr>
+                    <td>@house.Email</td>
+                    <td>@house.Password</td>
+                    <td>@house.Id</td>
+                    <td>@house.PhoneNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+
+    private List<UserView>? Houses;
+    private string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwL" +
+    "m9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjQ5ZTEyZTY0LTFhZWItNDRlYi1hODZkLTY0ZTNiOTAyZ" +
+    "jNkMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImNyZWF0b3IiLCJleHA"+
+    "iOjE2ODMwNDM3NjYsImlzcyI6IlNoYWJsb24udXoiLCJhdWQiOiJTaGFibG9uQXBpIn0.IZLmvN1vmq8OUiz-LYM9QPQ7Vbur4yEu6vxxm54kU38";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var http = new HttpClient();
+        Houses = await http.GetFromJsonAsync<List<UserView>>("https://localhost:7120/api/Account/all");
+        S
+	}
+}

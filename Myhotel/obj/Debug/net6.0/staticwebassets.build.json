@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "E3xQHNNXsSvF6o4Wr4re7oNSnswtkafbQNdPch/CvlU=",
+  "Hash": "SY+dv0L+dua9hVTMcZzv1ppghrlCF+arCGQvuIb2m/I=",
   "Source": "Myhotel",
   "BasePath": "/",
   "Mode": "Root",
@@ -102,6 +102,23 @@
       "OriginalItemSpec": "C:\\Users\\user\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.8\\runtimes\\browser-wasm\\native\\dotnet.wasm"
     },
     {
+      "Identity": "E:\\_GitHub\\Myhotel\\Myhotel\\bin\\Debug\\net6.0\\wwwroot\\_framework\\icudt.dat",
+      "SourceId": "Myhotel",
+      "SourceType": "Computed",
+      "ContentRoot": "E:\\_GitHub\\Myhotel\\Myhotel\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/icudt.dat",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "native",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\user\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.8\\runtimes\\browser-wasm\\native\\icudt.dat"
+    },
+    {
       "Identity": "E:\\_GitHub\\Myhotel\\Myhotel\\bin\\Debug\\net6.0\\wwwroot\\_framework\\icudt_CJK.dat",
       "SourceId": "Myhotel",
       "SourceType": "Computed",
@@ -151,23 +168,6 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\user\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.8\\runtimes\\browser-wasm\\native\\icudt_no_CJK.dat"
-    },
-    {
-      "Identity": "E:\\_GitHub\\Myhotel\\Myhotel\\bin\\Debug\\net6.0\\wwwroot\\_framework\\icudt.dat",
-      "SourceId": "Myhotel",
-      "SourceType": "Computed",
-      "ContentRoot": "E:\\_GitHub\\Myhotel\\Myhotel\\bin\\Debug\\net6.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/icudt.dat",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "BlazorWebAssemblyResource",
-      "AssetTraitValue": "native",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\user\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.8\\runtimes\\browser-wasm\\native\\icudt.dat"
     },
     {
       "Identity": "E:\\_GitHub\\Myhotel\\Myhotel\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Authorization.dll",
@@ -7259,23 +7259,6 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "E:\\_GitHub\\Myhotel\\Myhotel\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
-      "SourceId": "Myhotel",
-      "SourceType": "Discovered",
-      "ContentRoot": "E:\\_GitHub\\Myhotel\\Myhotel\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "css/open-iconic/FONT-LICENSE",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
-    },
-    {
       "Identity": "E:\\_GitHub\\Myhotel\\Myhotel\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "SourceId": "Myhotel",
       "SourceType": "Discovered",
@@ -7376,6 +7359,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
+    },
+    {
+      "Identity": "E:\\_GitHub\\Myhotel\\Myhotel\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "SourceId": "Myhotel",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\_GitHub\\Myhotel\\Myhotel\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "css/open-iconic/FONT-LICENSE",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
       "Identity": "E:\\_GitHub\\Myhotel\\Myhotel\\wwwroot\\css\\open-iconic\\ICON-LICENSE",

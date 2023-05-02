@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myhotel", "Myhotel\Myhotel.csproj", "{592B4E50-CB6A-4EE1-BE30-2E7D61FAD0E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Myhotel", "Myhotel\Myhotel.csproj", "{592B4E50-CB6A-4EE1-BE30-2E7D61FAD0E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyhotelApi", "MyhotelApi\MyhotelApi.csproj", "{94F77D62-E82C-4500-A9C4-515A68141F75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyhotelApi", "MyhotelApi\MyhotelApi.csproj", "{94F77D62-E82C-4500-A9C4-515A68141F75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

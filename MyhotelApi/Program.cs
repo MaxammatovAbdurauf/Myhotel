@@ -20,8 +20,8 @@ app.UseHttpsRedirection();
 app.UseExceptionHandlerMiddleware();
 app.UseRequestCultureMiddleware();
 
-app.UseAuthentication();
-app.UseAuthorization();
+/*app.UseAuthentication();
+app.UseAuthorization();*/
 
 app.MapControllers();
 

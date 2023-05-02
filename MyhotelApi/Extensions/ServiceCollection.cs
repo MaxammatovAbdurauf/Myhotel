@@ -41,7 +41,7 @@ public static class ServiceCollection
         {
             options.AddDefaultPolicy(options =>
             {
-                options.AllowAnyHeader().AllowAnyOrigin().AllowAnyOrigin().AllowAnyMethod();
+                options.AllowAnyHeader().AllowAnyOrigin().AllowCredentials().AllowAnyMethod();
             });
         });
     }

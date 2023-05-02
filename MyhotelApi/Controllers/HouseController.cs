@@ -40,10 +40,10 @@ public class HouseController : ControllerBase
     }
 
     [HttpGet("all")]
-    [Role(RoleType.Creator, RoleType.Admin)]
-    public async Task<IActionResult> GetHousesAsync([FromQuery]HouseFilterDto? houseFilterDto = null)
+    //[Role(RoleType.Creator, RoleType.Admin)]
+    public async Task<IActionResult> GetHousesAsync(/*HouseFilterDto? houseFilterDto = null*/)
     {
-        var houses = await houseService.GetHousesAsync(houseFilterDto);
+        var houses = await houseService.GetHousesAsync();
         return Ok(houses);
     }
 
